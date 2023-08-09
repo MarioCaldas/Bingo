@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Cell.gd" type="Script" id=1]
+[ext_resource path="res://7266.png" type="Texture" id=2]
+
+[node name="Cell" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = -19.0
+margin_top = -6.0
+margin_right = 19.0
+margin_bottom = 6.0
+bbcode_enabled = true
+bbcode_text = "[center]"
+scroll_active = false
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="7266" type="Sprite" parent="."]
+position = Vector2( 0.022, 0.005 )
+scale = Vector2( 0.104688, 0.104688 )
+texture = ExtResource( 2 )
