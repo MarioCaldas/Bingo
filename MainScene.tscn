@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://GridController.gd" type="Script" id=1]
-[ext_resource path="res://UIController.gd" type="Script" id=2]
-[ext_resource path="res://GameController.gd" type="Script" id=3]
-[ext_resource path="res://BingoBallsTube.png" type="Texture" id=4]
-[ext_resource path="res://SoundController.gd" type="Script" id=5]
-[ext_resource path="res://BallController.gd" type="Script" id=6]
-[ext_resource path="res://horLine.png" type="Texture" id=7]
-[ext_resource path="res://Corners.png" type="Texture" id=8]
-[ext_resource path="res://verLine.png" type="Texture" id=9]
-[ext_resource path="res://WinBingo.png" type="Texture" id=10]
-[ext_resource path="res://VLine.png" type="Texture" id=11]
-[ext_resource path="res://InvertedVLine.png" type="Texture" id=12]
+[ext_resource path="res://scripts/GridController.gd" type="Script" id=1]
+[ext_resource path="res://scripts/UIController.gd" type="Script" id=2]
+[ext_resource path="res://scripts/GameController.gd" type="Script" id=3]
+[ext_resource path="res://textures/bingoBallsTube.png" type="Texture" id=4]
+[ext_resource path="res://scripts/SoundController.gd" type="Script" id=5]
+[ext_resource path="res://scripts/BallController.gd" type="Script" id=6]
+[ext_resource path="res://textures/horLine.png" type="Texture" id=7]
+[ext_resource path="res://textures/corners.png" type="Texture" id=8]
+[ext_resource path="res://textures/verLine.png" type="Texture" id=9]
+[ext_resource path="res://textures/winBingo.png" type="Texture" id=10]
+[ext_resource path="res://textures/vLine.png" type="Texture" id=11]
+[ext_resource path="res://textures/invertedVLine.png" type="Texture" id=12]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -33,8 +33,14 @@ margin_right = 1022.0
 margin_bottom = 600.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UIController/Button"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 41.0
+margin_top = 42.0
+margin_right = 81.0
+margin_bottom = 60.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
+bbcode_enabled = true
+scroll_active = false
 
 [node name="TotalBallsLabel" type="RichTextLabel" parent="UIController"]
 margin_left = 424.0
@@ -57,33 +63,33 @@ visible = false
 position = Vector2( 514, 294 )
 texture = ExtResource( 10 )
 
-[node name="Prizes" type="Node" parent="UIController"]
+[node name="PrizesImages" type="Node" parent="UIController"]
 
-[node name="CornersPrize" type="Sprite" parent="UIController/Prizes"]
+[node name="CornersPrize" type="Sprite" parent="UIController/PrizesImages"]
 modulate = Color( 1, 1, 1, 0.294118 )
 position = Vector2( 105.642, 270.383 )
 scale = Vector2( 0.379272, 0.379272 )
 texture = ExtResource( 8 )
 
-[node name="VLinePrize" type="Sprite" parent="UIController/Prizes"]
+[node name="VLinePrize" type="Sprite" parent="UIController/PrizesImages"]
 modulate = Color( 1, 1, 1, 0.294118 )
 position = Vector2( 193.642, 270.383 )
 scale = Vector2( 0.379272, 0.379272 )
 texture = ExtResource( 11 )
 
-[node name="InvertedVLinePrize" type="Sprite" parent="UIController/Prizes"]
+[node name="InvertedVLinePrize" type="Sprite" parent="UIController/PrizesImages"]
 modulate = Color( 1, 1, 1, 0.294118 )
 position = Vector2( 193.642, 382.383 )
 scale = Vector2( 0.379272, 0.379272 )
 texture = ExtResource( 12 )
 
-[node name="HorLinePrize" type="Sprite" parent="UIController/Prizes"]
+[node name="HorLinePrize" type="Sprite" parent="UIController/PrizesImages"]
 modulate = Color( 1, 1, 1, 0.294118 )
 position = Vector2( 105.642, 382.383 )
 scale = Vector2( 0.379272, 0.379272 )
 texture = ExtResource( 7 )
 
-[node name="VerLinePrize" type="Sprite" parent="UIController/Prizes"]
+[node name="VerLinePrize" type="Sprite" parent="UIController/PrizesImages"]
 modulate = Color( 1, 1, 1, 0.294118 )
 position = Vector2( 105.642, 494.383 )
 scale = Vector2( 0.379272, 0.379272 )
@@ -106,7 +112,6 @@ autostart = true
 script = ExtResource( 5 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SoundController"]
-pitch_scale = 0.01
 
 [connection signal="pressed" from="UIController/Button" to="UIController" method="_on_Button_pressed"]
 [connection signal="timeout" from="BallController/Timer" to="BallController" method="_on_Timer_timeout"]
