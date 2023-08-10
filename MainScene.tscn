@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://GridController.gd" type="Script" id=1]
 [ext_resource path="res://UIController.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://horLine.png" type="Texture" id=7]
 [ext_resource path="res://Corners.png" type="Texture" id=8]
 [ext_resource path="res://verLine.png" type="Texture" id=9]
+[ext_resource path="res://WinBingo.png" type="Texture" id=10]
+[ext_resource path="res://VLine.png" type="Texture" id=11]
+[ext_resource path="res://InvertedVLine.png" type="Texture" id=12]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -18,24 +21,6 @@ __meta__ = {
 
 [node name="GridController" type="Node2D" parent="."]
 script = ExtResource( 1 )
-
-[node name="CornersBingo" type="Sprite" parent="GridController"]
-visible = false
-position = Vector2( 124.642, 246.383 )
-scale = Vector2( 0.379272, 0.379272 )
-texture = ExtResource( 8 )
-
-[node name="HorLineBingo" type="Sprite" parent="GridController"]
-visible = false
-position = Vector2( 124.642, 358.383 )
-scale = Vector2( 0.379272, 0.379272 )
-texture = ExtResource( 7 )
-
-[node name="VerLineBingo" type="Sprite" parent="GridController"]
-visible = false
-position = Vector2( 124.642, 470.383 )
-scale = Vector2( 0.379272, 0.379272 )
-texture = ExtResource( 9 )
 
 [node name="BingoBallsTube" type="Sprite" parent="."]
 position = Vector2( 514, 121 )
@@ -71,10 +56,48 @@ margin_right = 563.0
 margin_bottom = 13.0
 scroll_active = false
 
+[node name="WinBingoLabel" type="Sprite" parent="UIController"]
+visible = false
+position = Vector2( 514, 294 )
+texture = ExtResource( 10 )
+
+[node name="Prizes" type="Node" parent="UIController"]
+
+[node name="CornersPrize" type="Sprite" parent="UIController/Prizes"]
+modulate = Color( 1, 1, 1, 0.294118 )
+position = Vector2( 105.642, 270.383 )
+scale = Vector2( 0.379272, 0.379272 )
+texture = ExtResource( 8 )
+
+[node name="VLinePrize" type="Sprite" parent="UIController/Prizes"]
+modulate = Color( 1, 1, 1, 0.294118 )
+position = Vector2( 193.642, 270.383 )
+scale = Vector2( 0.379272, 0.379272 )
+texture = ExtResource( 11 )
+
+[node name="InvertedVLinePrize" type="Sprite" parent="UIController/Prizes"]
+modulate = Color( 1, 1, 1, 0.294118 )
+position = Vector2( 193.642, 382.383 )
+scale = Vector2( 0.379272, 0.379272 )
+texture = ExtResource( 12 )
+
+[node name="HorLinePrize" type="Sprite" parent="UIController/Prizes"]
+modulate = Color( 1, 1, 1, 0.294118 )
+position = Vector2( 105.642, 382.383 )
+scale = Vector2( 0.379272, 0.379272 )
+texture = ExtResource( 7 )
+
+[node name="VerLinePrize" type="Sprite" parent="UIController/Prizes"]
+modulate = Color( 1, 1, 1, 0.294118 )
+position = Vector2( 105.642, 494.383 )
+scale = Vector2( 0.379272, 0.379272 )
+texture = ExtResource( 9 )
+
 [node name="SoundController" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SoundController"]
+pitch_scale = 0.01
 
 [node name="BallController" type="Node2D" parent="."]
 script = ExtResource( 6 )

@@ -9,3 +9,5 @@ signal sGenerateBall
 signal sRoundFinished
 signal sReset
 signal sUpdateTotalBallsText
+signal sBingo(value)
+signal sLinePrize(value)

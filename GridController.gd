@@ -7,7 +7,18 @@ var marginX : int = 32
 var marginY : int = 28
 
 var grid: Dictionary = {}
+var linePrizes: Dictionary = {}
 var gridNumbers = Array()
+var markedCells = Array()
+
+# Constants for line types
+enum LineType {
+	HORIZONTAL,
+	VERTICAL,
+	CORNERS,
+	V,
+	INVERTED_V
+}
 
 const cell = preload("res://Cell.tscn")
 
@@ -114,8 +125,6 @@ func checkPrizes(_value : int):
 	else:
 		Signals.emit_signal("sPlayFailSound")
 
-# List to keep track of marked cells
-var markedCells := []
 
 # Call this function when a player marks a cell
 func markCell(cell_position: Vector2):
@@ -138,78 +147,71 @@ func isVector2InArray(vector: Vector2, array: Array) -> bool:
 	
 # Check for winning combinations
 func checkForWin():
-	var hasWon = false
-	var boardSize = int(sqrt(grid.size()))
-
-	# Check for horizontal lines
-	for y in range(height):
-		var line = []
-		for x in range(width):
-			var cell_position = Vector2(x, y)
-			if cell_position in markedCells:
-				line.append(cell_position)
-
-		if len(line) == width:
-			get_node("HorLineBingo").visible = true
-			hasWon = true
-			break
-
-	# Check for vertical lines
-	#if not hasWon:
-	for x in range(width):
-		var line = []
+	# Check for horizontal prize
+	if !linePrizes.has(LineType.HORIZONTAL):
+		print("check Horizontal")
 		for y in range(height):
-			var cell_position = Vector2(x, y)
-			if cell_position in markedCells:
-				line.append(cell_position)
-		if len(line) == height:
-			get_node("VerLineBingo").visible = true
-			hasWon = true
-			break
+			var line = []
+			for x in range(width):
+				if Vector2(x, y) in markedCells:
+					line.append(Vector2(x, y))
 
-	# Check for corner wins
-	#if not hasWon:
-	var corners = [Vector2(0, 0), Vector2(0, height - 1), Vector2(width - 1, 0), Vector2(width - 1, height - 1)]
-	var allCornersMarked = true
-	for corner in corners:
-		if !(corner in markedCells):
-			allCornersMarked = false
-			break
-	if allCornersMarked:
-		get_node("CornersBingo").visible = true
-		hasWon = true
+			if len(line) == width:
+				Signals.emit_signal("sLinePrize", LineType.HORIZONTAL)
+				linePrizes[LineType.HORIZONTAL] = true
+				break
 
+	# Check for vertical prize
+	if !linePrizes.has(LineType.VERTICAL):	
+		print("check vertical")
+		for x in range(width):
+			var line = []
+			for y in range(height):
+				if Vector2(x, y) in markedCells:
+					line.append(Vector2(x, y))
+			if len(line) == height:
+				Signals.emit_signal("sLinePrize", LineType.VERTICAL)
+				linePrizes[LineType.VERTICAL] = true
+				break
 
+	# Check for corners prize
+	if !linePrizes.has(LineType.CORNERS):	
+		print("check CORNERS")	
+		var corners = [Vector2(0, 0), Vector2(0, height - 1), Vector2(width - 1, 0), Vector2(width - 1, height - 1)]
+		var allCornersMarked = true
+		for corner in corners:
+			if !(corner in markedCells):
+				allCornersMarked = false
+				break
+		if allCornersMarked:
+			Signals.emit_signal("sLinePrize", LineType.CORNERS)
+			linePrizes[LineType.CORNERS] = true
+			
+	# check for V and Inverted V prize
+	if !linePrizes.has(LineType.V) || !linePrizes.has(LineType.INVERTED_V):	
+		for x in range(width):
+			for y in range(height):
+				if Vector2(x,y) in markedCells && Vector2(x - 1,y - 1) in markedCells && Vector2(x + 1,y - 1) in markedCells:
+					linePrizes[LineType.V] = true
+					Signals.emit_signal("sLinePrize", LineType.V)
+				if Vector2(x,y) in markedCells && Vector2(x - 1,y + 1) in markedCells && Vector2(x + 1,y + 1) in markedCells:
+					linePrizes[LineType.INVERTED_V] = true	
+					Signals.emit_signal("sLinePrize", LineType.INVERTED_V)
+				
+
+	# Check for bingo
 	if markedCells.size() == (width * height):
-		hasWon = true
+		Signals.emit_signal("sBingo")
+		Signals.emit_signal("sRoundFinished")
 
-#	if hasWon:
-#		print("Bingo! You have won!")
-		
-	# Check for diagonal lines (only if the board is square)
-#	if not hasWon and boardSize == boardSize:
-#		var line = []
-#		for i in range(boardSize):
-#			var cell_position = i * boardSize + i
-#			if cell_position in markedCells:
-#				line.append(cell_position)
-#		if len(line) == boardSize:
-#			hasWon = true
-#
-#		if not hasWon:
-#			line.clear()
-#			for i in range(boardSize):
-#				var cell_position = (i * boardSize) + (boardSize - 1 - i)
-#				if cell_position in markedCells:
-#					line.append(cell_position)
-#			if len(line) == boardSize:
-#				hasWon = true
 
 func resetGrid():
 	gridNumbers.clear()
 	for i in grid.keys():
 		grid[i].queue_free()
 	grid.clear()
+	markedCells.clear()
+	linePrizes.clear()
 	generateGrid()
 
 

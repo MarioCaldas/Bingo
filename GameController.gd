@@ -2,7 +2,8 @@ extends Node2D
 
 var gameStoped = false
 
-var roundFinished
+var roundFinished = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,11 +12,7 @@ func _ready():
 	Signals.emit_signal("sGenerateGrid")
 	Signals.emit_signal("sGenerateBall")
 	Signals.connect("sRoundFinished", self, "roundFinished")
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
+	Signals.connect("sBingo", self, "stopAndResumeGame")
 
 func stopAndResumeGame():
 	if(roundFinished):
@@ -27,12 +24,12 @@ func stopAndResumeGame():
 		else:
 			get_tree().paused = false
 			gameStoped = false
-			
-		
+
 func roundFinished():
 	roundFinished = true
 
 func resetGame():
 	Signals.emit_signal("sReset")
 	roundFinished = false
-	
+	gameStoped = false
+	get_tree().paused = gameStoped

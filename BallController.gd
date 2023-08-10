@@ -11,19 +11,20 @@ const ball = preload("res://Ball.tscn")
 const maxQueueBalls = 4
 
 const minBallValue = 1
-const maxBallValue = 30
+const maxBallValue = 60
 
-const totalRoundBallsAmount = 5
+var totalRoundBallsAmount = 40
 var curRoundBallsAmount = 0
 
-var ballQueueTimout = 1
+var ballQueueTimout = 0.5
 
 func _ready():
 	Signals.connect("sGenerateBall", self, "generateBall")
 	Signals.connect("sReset", self, "resetBalls")
-#	Signals.connect("")
 	randomizer.randomize()
 	setBallsColors()
+	if(totalRoundBallsAmount > maxBallValue):
+		totalRoundBallsAmount = maxBallValue
 
 
 func generateBall():
