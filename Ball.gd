@@ -8,13 +8,12 @@ var moveDuration = 2
 var progress = 0
 var isFinished = false
 
-var value
+var value = 0
 
-var positionInQueue
-var screenSize
-
-var updateDist
-var initDist
+var positionInQueue = 0
+var screenSize = 0
+var updateDist = 0 
+var initDist = 0
 
 func _ready():
 	screenSize = get_viewport().get_visible_rect().size
@@ -23,7 +22,6 @@ func _ready():
 	positionInQueue = 0
 	scale = Vector2(0.7, 0.7)
 	initDist = point1.distance_to(point2)
-
 
 
 func _process(delta):
@@ -36,6 +34,11 @@ func _process(delta):
 		if(positionInQueue == 0):
 			Signals.emit_signal("sPathCompleted", value)
 		isFinished = true
+		
+	if isFinished && positionInQueue == 0:
+		progress = time / moveDuration
+		if(progress - 1) >= get_parent().ballQueueTimout :
+			get_parent().updateQueue()
 
 
 func recalculateMoveDuration() -> int:
@@ -56,7 +59,6 @@ func resumeMovement():
 	positionInQueue -= 1
 	point2 = Vector2((screenSize.x * 0.28) + (positionInQueue * 105), screenSize.y * 0.2)
 	progress = 0
-
 
 func setValueText(_value: int):
 	value = _value

@@ -140,7 +140,7 @@ func isVector2InArray(vector: Vector2, array: Array) -> bool:
 func checkForWin():
 	var hasWon = false
 	var boardSize = int(sqrt(grid.size()))
-	print(markedCells)
+
 	# Check for horizontal lines
 	for y in range(height):
 		var line = []
@@ -151,7 +151,6 @@ func checkForWin():
 
 		if len(line) == width:
 			get_node("HorLineBingo").visible = true
-			print("HORIZONTAL")
 			hasWon = true
 			break
 
@@ -165,7 +164,6 @@ func checkForWin():
 				line.append(cell_position)
 		if len(line) == height:
 			get_node("VerLineBingo").visible = true
-			print("Vertical")
 			hasWon = true
 			break
 
@@ -210,7 +208,6 @@ func checkForWin():
 func resetGrid():
 	gridNumbers.clear()
 	for i in grid.keys():
-		print(grid[i].value)
 		grid[i].queue_free()
 	grid.clear()
 	generateGrid()

@@ -81,12 +81,8 @@ script = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="BallController"]
 process_mode = 0
-wait_time = 0.7
+wait_time = 0.2
 autostart = true
-
-[node name="Timer2" type="Timer" parent="BallController"]
-wait_time = 2.5
 
 [connection signal="pressed" from="UIController/Button" to="UIController" method="_on_Button_pressed"]
 [connection signal="timeout" from="BallController/Timer" to="BallController" method="_on_Timer_timeout"]
-[connection signal="timeout" from="BallController/Timer2" to="BallController" method="_on_Timer2_timeout"]

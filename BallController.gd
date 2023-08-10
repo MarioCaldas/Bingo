@@ -7,40 +7,38 @@ var ballsObj = Array()#optimizar
 var ballsColors = {}
 
 const ball = preload("res://Ball.tscn")
-	
-var timer2
 
-const maxQueueCurrentBalls = 4
+const maxQueueBalls = 4
 
 const minBallValue = 1
 const maxBallValue = 30
 
-const totalRoundBallsAmount = 300
+const totalRoundBallsAmount = 5
 var curRoundBallsAmount = 0
+
+var ballQueueTimout = 1
 
 func _ready():
 	Signals.connect("sGenerateBall", self, "generateBall")
 	Signals.connect("sReset", self, "resetBalls")
+#	Signals.connect("")
 	randomizer.randomize()
-	timer2 = get_node("Timer2")
-	timer2.start()
 	setBallsColors()
 
-var teste = 0
+
 func generateBall():
-	if(ballsObj.size() < maxQueueCurrentBalls):
+	if(ballsObj.size() < maxQueueBalls):
 		var randomNumber = randomizer.randi_range(minBallValue, maxBallValue)
 		if !ballsNumbers.has(randomNumber):
 			ballsNumbers.append(randomNumber)
-			#print("Generated unique number:", randomNumber)
 			instantiateBall(randomNumber)
-			Signals.emit_signal("sUpdateTotalBallsText", totalRoundBallsAmount - curRoundBallsAmount)
 			curRoundBallsAmount += 1
+			Signals.emit_signal("sUpdateTotalBallsText", totalRoundBallsAmount - curRoundBallsAmount)
 		else:
 			generateBall()
 	elif(curRoundBallsAmount >= totalRoundBallsAmount):
 		get_node("Timer").stop()
-		Signals.emit_signal("sUpdateTotalBallsText", totalRoundBallsAmount - curRoundBallsAmount)
+
 
 func instantiateBall(value: int): 
 	var newBall = ball.instance()
@@ -58,17 +56,14 @@ func updateQueue():
 	currentBall.queue_free()
 	for i in range(ballsObj.size()):
 		if(ballsObj[i] != null):
+			ballsObj[i].moveDuration = ballsObj[ballsObj.size() - 1].moveDuration
 			ballsObj[i].resumeMovement()
 			
 	if(ballsObj.size() <= 0):
-		get_node("Timer2").stop()
 		Signals.emit_signal("sRoundFinished")
 				
 func _on_Timer_timeout():
 	Signals.emit_signal("sGenerateBall")
-
-func _on_Timer2_timeout():
-	updateQueue()
 
 
 func setBallsColors():
@@ -84,9 +79,6 @@ func setBallsColors():
 		9 : Color.gray
 	}
 
-func startTimers():
-	get_node("Timer").start()
-	get_node("Timer2").start()
 
 func resetBalls():
 	ballsNumbers.clear()
@@ -94,5 +86,5 @@ func resetBalls():
 		ballsObj[i].queue_free()
 	ballsObj.clear()
 	curRoundBallsAmount = 0
-	startTimers()
+	get_node("Timer").start()
 	
