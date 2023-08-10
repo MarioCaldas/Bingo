@@ -3,20 +3,20 @@ extends Node2D
 var randomizer = RandomNumberGenerator.new()
 
 var ballsNumbers = Array()
-var ballsObj = Array()#optimizar
-var ballsColors = {}
+var ballsObj = Array()
+var ballsColors = Dictionary()
 
 const ball = preload("res://Ball.tscn")
 
 const maxQueueBalls = 4
 
-const minBallValue = 1
-const maxBallValue = 60
+export var minBallValue = 1
+export var maxBallValue = 60
 
 var totalRoundBallsAmount = 40
 var curRoundBallsAmount = 0
 
-var ballQueueTimout = 0.5
+var ballQueueTimout = 2
 
 func _ready():
 	Signals.connect("sGenerateBall", self, "generateBall")
@@ -41,13 +41,13 @@ func generateBall():
 		get_node("Timer").stop()
 
 
-func instantiateBall(value: int): 
+func instantiateBall(_value: int): 
 	var newBall = ball.instance()
 	newBall.visible = false
-	newBall.setValueText(value)
+	newBall.setValueText(_value)
 	add_child(newBall)
 	ballsObj.append(newBall)
-	var groupColor = (value - 1) / 10 + 1
+	var groupColor = (_value - 1) / 10 + 1
 	newBall.get_node("BBall").modulate = ballsColors[groupColor]
 	newBall.setPoint2OnQueue(ballsObj.size() - 1)
 		
@@ -63,6 +63,7 @@ func updateQueue():
 	if(ballsObj.size() <= 0):
 		Signals.emit_signal("sRoundFinished")
 				
+
 func _on_Timer_timeout():
 	Signals.emit_signal("sGenerateBall")
 

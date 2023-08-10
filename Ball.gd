@@ -7,9 +7,7 @@ var time = 0
 var moveDuration = 2
 var progress = 0
 var isFinished = false
-
 var value = 0
-
 var positionInQueue = 0
 var screenSize = 0
 var updateDist = 0 
@@ -45,8 +43,8 @@ func recalculateMoveDuration() -> int:
 	return (updateDist * moveDuration) / initDist
 
 
-func setPoint2OnQueue(pos: int):
-	positionInQueue = pos
+func setPoint2OnQueue(_pos: int):
+	positionInQueue = _pos
 	point2 = Vector2(point2.x + (positionInQueue * 105), point2.y)
 	updateDist = point1.distance_to(point2)
 	moveDuration = recalculateMoveDuration()
@@ -62,4 +60,4 @@ func resumeMovement():
 
 func setValueText(_value: int):
 	value = _value
-	get_node("RichTextLabel").add_text(str(value))
+	get_node("RichTextLabel").bbcode_text = "[center]" + str(value)

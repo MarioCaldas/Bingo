@@ -2,7 +2,6 @@ extends Node2D
 
 var playBtt
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	playBtt = get_node("Button")
 	playBtt.get_node("RichTextLabel").text = "Start"
@@ -19,8 +18,8 @@ func _on_Button_pressed():
 	else:
 		playBtt.get_node("RichTextLabel").text = "Start"
 
-func updateTotalBallsText(value):
-	get_node("TotalBallsValue").text = str(value)
+func updateTotalBallsText(_value):
+	get_node("TotalBallsValue").text = str(_value)
 		
 func showBingoLabel():
 	get_node("WinBingoLabel").visible = true
@@ -33,21 +32,23 @@ func resetUI():
 	get_node("WinBingoLabel").visible = false
 	resetLinePrizes()
 	
-func showLinePrizes(value):
-	if(value == 0):
-		get_node("Prizes").get_node("HorLinePrize").modulate = Color(1, 1, 1, 1)
-	elif(value == 1):
-		get_node("Prizes").get_node("VerLinePrize").modulate = Color(1, 1, 1, 1)
-	elif(value == 2):
-		get_node("Prizes").get_node("CornersPrize").modulate = Color(1, 1, 1, 1)
-	elif(value == 3):
-		get_node("Prizes").get_node("VLinePrize").modulate = Color(1, 1, 1, 1)
-	elif(value == 4):
-		get_node("Prizes").get_node("InvertedVLinePrize").modulate = Color(1, 1, 1, 1)
+func showLinePrizes(_value):
+	var alphaValue = 1
+	if(_value == 0):
+		get_node("Prizes").get_node("HorLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	elif(_value == 1):
+		get_node("Prizes").get_node("VerLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	elif(_value == 2):
+		get_node("Prizes").get_node("CornersPrize").modulate = Color(1, 1, 1, alphaValue)
+	elif(_value == 3):
+		get_node("Prizes").get_node("VLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	elif(_value == 4):
+		get_node("Prizes").get_node("InvertedVLinePrize").modulate = Color(1, 1, 1, alphaValue)
 
 func resetLinePrizes():
-	get_node("Prizes").get_node("HorLinePrize").modulate = Color(1, 1, 1, 0.3)
-	get_node("Prizes").get_node("VerLinePrize").modulate = Color(1, 1, 1, 0.3)
-	get_node("Prizes").get_node("CornersPrize").modulate = Color(1, 1, 1, 0.3)
-	get_node("Prizes").get_node("VLinePrize").modulate = Color(1, 1, 1, 0.3)
-	get_node("Prizes").get_node("InvertedVLinePrize").modulate = Color(1, 1, 1, 0.3)
+	var alphaValue = 0.3
+	get_node("Prizes").get_node("HorLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	get_node("Prizes").get_node("VerLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	get_node("Prizes").get_node("CornersPrize").modulate = Color(1, 1, 1, alphaValue)
+	get_node("Prizes").get_node("VLinePrize").modulate = Color(1, 1, 1, alphaValue)
+	get_node("Prizes").get_node("InvertedVLinePrize").modulate = Color(1, 1, 1, alphaValue)

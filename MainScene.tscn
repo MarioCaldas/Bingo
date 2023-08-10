@@ -22,12 +22,6 @@ __meta__ = {
 [node name="GridController" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
-[node name="BingoBallsTube" type="Sprite" parent="."]
-position = Vector2( 514, 121 )
-scale = Vector2( 0.826733, 0.826733 )
-texture = ExtResource( 4 )
-flip_h = true
-
 [node name="UIController" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
@@ -44,16 +38,18 @@ margin_bottom = 40.0
 
 [node name="TotalBallsLabel" type="RichTextLabel" parent="UIController"]
 margin_left = 424.0
+margin_top = 16.0
 margin_right = 535.0
-margin_bottom = 40.0
+margin_bottom = 56.0
 bbcode_enabled = true
 bbcode_text = "[center]Total Balls:"
 text = "Total Balls:"
 
 [node name="TotalBallsValue" type="RichTextLabel" parent="UIController"]
 margin_left = 520.0
+margin_top = 16.0
 margin_right = 563.0
-margin_bottom = 13.0
+margin_bottom = 29.0
 scroll_active = false
 
 [node name="WinBingoLabel" type="Sprite" parent="UIController"]
@@ -93,19 +89,24 @@ position = Vector2( 105.642, 494.383 )
 scale = Vector2( 0.379272, 0.379272 )
 texture = ExtResource( 9 )
 
-[node name="SoundController" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SoundController"]
-pitch_scale = 0.01
+[node name="BingoBallsTube" type="Sprite" parent="UIController"]
+position = Vector2( 514, 121 )
+scale = Vector2( 0.826733, 0.826733 )
+texture = ExtResource( 4 )
+flip_h = true
 
 [node name="BallController" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="BallController"]
 process_mode = 0
-wait_time = 0.2
 autostart = true
+
+[node name="SoundController" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SoundController"]
+pitch_scale = 0.01
 
 [connection signal="pressed" from="UIController/Button" to="UIController" method="_on_Button_pressed"]
 [connection signal="timeout" from="BallController/Timer" to="BallController" method="_on_Timer_timeout"]

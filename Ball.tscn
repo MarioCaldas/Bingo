@@ -6,7 +6,7 @@
 [ext_resource path="res://Signals.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
-size = 35
+size = 33
 font_data = ExtResource( 3 )
 
 [node name="Ball" type="Node2D"]
@@ -21,9 +21,11 @@ script = ExtResource( 4 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = -37.0
+margin_left = -20.0
 margin_top = -21.0
-margin_right = 31.0
+margin_right = 17.0
 margin_bottom = 20.0
 custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]"
 scroll_active = false
