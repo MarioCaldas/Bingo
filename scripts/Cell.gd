@@ -1,6 +1,6 @@
 extends Node2D
 
-var value
+var value = 0
 var cellPostion = Vector2()
 var isMarked = false
 

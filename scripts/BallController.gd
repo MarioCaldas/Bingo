@@ -13,7 +13,7 @@ const maxQueueBalls = 4
 export var minBallValue = 1
 export var maxBallValue = 60
 
-var totalRoundBallsAmount = 30
+export var totalRoundBallsAmount = 30
 var curRoundBallsAmount = 0
 
 var ballQueueTimout = 2

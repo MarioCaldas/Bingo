@@ -4,13 +4,17 @@ export var width = 5
 export var height = 3
 export var minGridNumberValue = 1
 export var maxGridNumberValue = 60
-const cell_size = 10
 const marginX = 32
 const marginY = 28
 
 var gridValues = Dictionary()
 var gridPositions = Dictionary()
 var linePrizes = Dictionary()
+
+const cell = preload("res://Cell.tscn")
+const cell_size = 10
+
+var randomizer = RandomNumberGenerator.new()
 
 var totalMarkedCells = 0
 
@@ -21,10 +25,6 @@ enum PrizeType {
 	V,
 	INVERTED_V
 }
-
-const cell = preload("res://Cell.tscn")
-
-var randomizer = RandomNumberGenerator.new()
 
 func _ready():
 	Signals.connect("sGenerateGrid", self, "generateGrid")
@@ -46,7 +46,7 @@ func generateGrid():
 			gridPositions[Vector2(x,y)] = gridValues[value]
 
 
-func findPrizesTeste(cellPoss: Vector2):
+func findPrizes(cellPoss: Vector2):
 	if !gridPositions.has(cellPoss):
 		return
 	
@@ -73,10 +73,12 @@ func findPrizesTeste(cellPoss: Vector2):
 	
 	if countUp + countDown - 1 == height:
 		Signals.emit_signal("sLinePrize", PrizeType.VERTICAL)
+		linePrizes[PrizeType.VERTICAL] = true	
 	
 	if countRight + countLeft - 1 == width:
 		Signals.emit_signal("sLinePrize", PrizeType.HORIZONTAL)
-	
+		linePrizes[PrizeType.HORIZONTAL] = true	
+		
 	# Check for corners prize
 	if !linePrizes.has(PrizeType.CORNERS):	
 		var corners = [Vector2(0, 0), Vector2(0, height - 1), Vector2(width - 1, 0), Vector2(width - 1, height - 1)]
@@ -133,12 +135,11 @@ func generateRandomUniqueNumbers() -> int:
 func checkValue(_value : int):
 	if gridValues.has(_value):
 		gridValues[_value].isMarked = true
-		findPrizesTeste(gridValues[_value].cellPostion)
+		findPrizes(gridValues[_value].cellPostion)
 		gridValues[_value].updateTextColor()
 		Signals.emit_signal("sPlaySuccessSound")
 	else:
 		Signals.emit_signal("sPlayFailSound")
-
 
 
 func resetGrid():
@@ -148,5 +149,6 @@ func resetGrid():
 	linePrizes.clear()
 	gridPositions.clear()
 	generateGrid()
+	totalMarkedCells = 0
 
 
