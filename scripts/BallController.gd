@@ -3,7 +3,7 @@ extends Node2D
 var randomizer = RandomNumberGenerator.new()
 
 var ballsNumbers = Array()
-var ballsObj = Array()
+var ballsInstantiated = Array()
 var ballsColors = Dictionary()
 
 const ball = preload("res://Ball.tscn")
@@ -29,7 +29,7 @@ func _ready():
 	Signals.emit_signal("sUpdateTotalBallsText", totalRoundBallsAmount)
 
 func generateBall():
-	if(ballsObj.size() < maxQueueBalls && curRoundBallsAmount < totalRoundBallsAmount):
+	if(ballsInstantiated.size() < maxQueueBalls && curRoundBallsAmount < totalRoundBallsAmount):
 		var randomNumber = randomizer.randi_range(minBallValue, maxBallValue)
 		if !ballsNumbers.has(randomNumber):
 			ballsNumbers.append(randomNumber)
@@ -46,21 +46,21 @@ func instantiateBall(_value: int):
 	newBall.visible = false
 	newBall.setValueText(_value)
 	add_child(newBall)
-	ballsObj.append(newBall)
+	ballsInstantiated.append(newBall)
 	var groupColor = (_value - 1) / 10 + 1
 	newBall.get_node("texture").modulate = ballsColors[groupColor]
-	newBall.setPoint2OnQueue(ballsObj.size() - 1)
+	newBall.setPoint2OnQueue(ballsInstantiated.size() - 1)
 	curRoundBallsAmount += 1	
 
 func updateQueue():
-	var currentBall = ballsObj.pop_front()
+	var currentBall = ballsInstantiated.pop_front()
 	currentBall.queue_free()
-	for i in range(ballsObj.size()):
-		if(ballsObj[i] != null):
-			ballsObj[i].moveDuration = ballsObj[ballsObj.size() - 1].moveDuration
-			ballsObj[i].resumeMovement()
+	for i in ballsInstantiated.size():
+		if(ballsInstantiated[i] != null):
+			ballsInstantiated[i].moveDuration = ballsInstantiated[ballsInstantiated.size() - 1].moveDuration
+			ballsInstantiated[i].resumeMovement()
 			
-	if(ballsObj.size() <= 0):
+	if(ballsInstantiated.size() <= 0):
 		Signals.emit_signal("sRoundFinished")
 				
 
@@ -84,9 +84,9 @@ func setBallsColors():
 
 func resetBalls():
 	ballsNumbers.clear()
-	for i in ballsObj.size():
-		ballsObj[i].queue_free()
-	ballsObj.clear()
+	for i in ballsInstantiated.size():
+		ballsInstantiated[i].queue_free()
+	ballsInstantiated.clear()
 	curRoundBallsAmount = 0
 	get_node("Timer").start()
 	

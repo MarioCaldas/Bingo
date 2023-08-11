@@ -21,6 +21,7 @@ __meta__ = {
 
 [node name="GridController" type="Node2D" parent="."]
 script = ExtResource( 1 )
+maxGridNumberValue = 30
 
 [node name="UIController" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -43,18 +44,18 @@ bbcode_enabled = true
 scroll_active = false
 
 [node name="TotalBallsLabel" type="RichTextLabel" parent="UIController"]
-margin_left = 424.0
+margin_left = 447.0
 margin_top = 16.0
-margin_right = 535.0
+margin_right = 558.0
 margin_bottom = 56.0
 bbcode_enabled = true
-bbcode_text = "[center]Total Balls:"
-text = "Total Balls:"
+bbcode_text = "[center]Remaining Balls:"
+text = "Remaining Balls:"
 
 [node name="TotalBallsValue" type="RichTextLabel" parent="UIController"]
-margin_left = 520.0
+margin_left = 555.0
 margin_top = 16.0
-margin_right = 563.0
+margin_right = 598.0
 margin_bottom = 29.0
 scroll_active = false
 
@@ -106,6 +107,7 @@ script = ExtResource( 6 )
 
 [node name="Timer" type="Timer" parent="BallController"]
 process_mode = 0
+wait_time = 0.7
 autostart = true
 
 [node name="SoundController" type="Node2D" parent="."]

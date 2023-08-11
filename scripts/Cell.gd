@@ -1,8 +1,8 @@
 extends Node2D
 
 var value
-var neighbours = Array()
 var cellPostion = Vector2()
+var isMarked = false
 
 func setValueText(_value: int):
 	value = _value
@@ -11,6 +11,4 @@ func setValueText(_value: int):
 func updateTextColor():
 	get_node("RichTextLabel").set("custom_colors/default_color", Color(1,0,0,1))
 
-func addNeighbour(_neighbour: Node2D):
-	neighbours.append(_neighbour)
 	

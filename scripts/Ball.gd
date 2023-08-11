@@ -1,13 +1,14 @@
 extends Node2D
 
+var value = 0
+
+#Animation process vars
 var point1 = Vector2(0,0)
 var point2 = Vector2(0,0)
-# Define basic variables and settings
 var time = 0
 var moveDuration = 2
 var progress = 0
 var isFinished = false
-var value = 0
 var positionInQueue = 0
 var screenSize = 0
 var updateDist = 0 
@@ -42,14 +43,12 @@ func _process(delta):
 func recalculateMoveDuration() -> int:
 	return (updateDist * moveDuration) / initDist
 
-
 func setPoint2OnQueue(_pos: int):
 	positionInQueue = _pos
 	point2 = Vector2(point2.x + (positionInQueue * 105), point2.y)
 	updateDist = point1.distance_to(point2)
 	moveDuration = recalculateMoveDuration()
 
-	
 func resumeMovement():
 	time = 0
 	isFinished = false

@@ -34,15 +34,15 @@ func resetUI():
 	
 func showLinePrizes(_value):
 	var alphaValue = 1
-	if(_value == 0):
+	if(_value == 0):#Horizontal
 		get_node("PrizesImages").get_node("HorLinePrize").modulate = Color(1, 1, 1, alphaValue)
-	elif(_value == 1):
+	elif(_value == 1):#Vertical
 		get_node("PrizesImages").get_node("VerLinePrize").modulate = Color(1, 1, 1, alphaValue)
-	elif(_value == 2):
+	elif(_value == 2):#Corners
 		get_node("PrizesImages").get_node("CornersPrize").modulate = Color(1, 1, 1, alphaValue)
-	elif(_value == 3):
+	elif(_value == 3):#V
 		get_node("PrizesImages").get_node("VLinePrize").modulate = Color(1, 1, 1, alphaValue)
-	elif(_value == 4):
+	elif(_value == 4):#InvertedV
 		get_node("PrizesImages").get_node("InvertedVLinePrize").modulate = Color(1, 1, 1, alphaValue)
 
 func resetLinePrizes():
